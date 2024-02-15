@@ -7,6 +7,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: "#DFF26A",
+        black: "#111111",
+        foreground: "#F7F6F6",
+      },
+      fontFamily: {
+        raleway: "var(--font-raleway)",
+        poppins: "var(--font-poppins)",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -15,4 +24,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+}

@@ -1,6 +1,11 @@
 import { initializeApp } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
-import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth"
+import {
+  getAuth,
+  setPersistence,
+  browserLocalPersistence,
+  GoogleAuthProvider,
+} from "firebase/auth"
 
 const firebaseConfig = {
   apiKey: "AIzaSyCHtatyVzbmil7AFq2UjO9c4w9HW5G8v2Q",
@@ -14,13 +19,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 const auth = getAuth(app)
-// Set the authentication state persistence
-setPersistence(auth, browserLocalPersistence)
-  .then(() => {
-    // Persistence is set. You can now authenticate a user.
-  })
-  .catch((error) => {
-    console.error("Error setting Firebase auth persistence:", error)
-  })
+const provider = new GoogleAuthProvider()
+provider.setCustomParameters({
+  prompt: "select_account",
+})
 
-export { db, auth }
+export { db, auth, provider }
