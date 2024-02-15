@@ -1,4 +1,3 @@
-// pages/auth/login.js
 import { useEffect, useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/router"
@@ -28,7 +27,7 @@ export default function Register() {
       await createUserWithEmailAndPassword(auth, email, password)
       toast.success("Account created successfully")
       await signIn("credentials", {
-        redirect: false, // Prevent NextAuth from redirecting automatically
+        redirect: false,
         email,
         password,
       })
@@ -60,6 +59,7 @@ export default function Register() {
         refreshToken: res.user.stsTokenManager.refreshToken,
         redirect: false,
       })
+      router.push("/dashboard")
     } catch (error) {
       console.error("An unexpected error happened:", error)
     }
@@ -98,7 +98,7 @@ export default function Register() {
               </p>
             </div>
             <div className=" relative  ">
-              <div className="w-full flex items-center bg-white rounded-xl pr-3  pl-5 ">
+              <div className="w-full flex items-center bg-white rounded-xl pr-2  pl-5 ">
                 <Mail size={30} className="text-black" />
                 <input
                   id="email"
@@ -106,7 +106,7 @@ export default function Register() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-xl py-6 px-5 outline-none w-full text-lg font-light text-gray-800  "
+                  className="appearance-none rounded-xl py-5 px-5 outline-none w-full text-lg font-light text-gray-800  "
                   placeholder="Email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -114,7 +114,7 @@ export default function Register() {
                 <Button
                   type="button"
                   variant="black"
-                  className="px-5 w-max "
+                  className="px-5 py-4 w-max "
                   onClick={() => setStep(2)}
                   icon={<ArrowRight />}
                 ></Button>
@@ -129,11 +129,44 @@ export default function Register() {
                 variant="black"
               >
                 <div className="w-[18px]">
-                  <svg role="img" viewBox="0 0 24 24">
-                    <path
-                      fill="currentColor"
-                      d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                    />
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_30_328)">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M20 10.2222C20 9.39994 19.9319 8.79993 19.7846 8.17773H10.2041V11.8888H15.8276C15.7143 12.8111 15.1021 14.1999 13.7415 15.1332L13.7224 15.2575L16.7516 17.5572L16.9614 17.5778C18.8888 15.8333 20 13.2666 20 10.2222Z"
+                        fill="#4285F4"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M10.2041 20C12.9591 20 15.272 19.1111 16.9614 17.5778L13.7414 15.1332C12.8798 15.7221 11.7233 16.1333 10.2041 16.1333C7.50568 16.1333 5.21546 14.3889 4.39903 11.9778L4.2794 11.9877L1.12958 14.3766L1.08838 14.4888C2.76636 17.7555 6.21311 20 10.2041 20Z"
+                        fill="#34A853"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.3991 11.9778C4.18371 11.3556 4.059 10.6889 4.059 10C4.059 9.31111 4.18365 8.64445 4.38777 8.02224L4.38208 7.8897L1.19284 5.4624L1.08851 5.51106C0.396918 6.86664 0.00012207 8.38884 0.00012207 9.99997C0.00012207 11.6111 0.396979 13.1332 1.08851 14.4888L4.39916 11.9777"
+                        fill="#FBBC04"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M10.2041 3.86658C12.1202 3.86658 13.4126 4.67772 14.1496 5.35555L17.0294 2.59998C15.2608 0.988861 12.9591 0 10.2041 0C6.21311 0 2.76642 2.24442 1.08838 5.51107L4.3877 8.02225C5.21546 5.61115 7.50568 3.86664 10.2041 3.86664"
+                        fill="#EA4335"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_30_328">
+                        <rect width="20" height="20" fill="white" />
+                      </clipPath>
+                    </defs>
                   </svg>
                 </div>
                 Continue with Google
@@ -155,7 +188,7 @@ export default function Register() {
             <div className=" relative  ">
               <div className="flex flex-col gap-3  ">
                 <div className="w-full flex bg-white rounded-xl items-center pl-5 ">
-                  <Key size={30} className="text-black" />
+                  <Key size={24} className="text-black" />
                   <div>
                     <input
                       id="password"
@@ -164,7 +197,7 @@ export default function Register() {
                       focus="true"
                       autoComplete="current-password"
                       required
-                      className="appearance-none rounded-xl  py-6 px-5 outline-none w-full text-lg font-light text-gray-800  "
+                      className="appearance-none rounded-xl  py-5 px-5 outline-none w-full text-lg font-light text-gray-800  "
                       placeholder="Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -172,7 +205,7 @@ export default function Register() {
                   </div>
                 </div>
                 <div className="w-full flex bg-white rounded-xl items-center pl-5 ">
-                  <Key size={30} className="text-black" />
+                  <Key size={24} className="text-black" />
                   <div>
                     <input
                       id="confirm-password"
@@ -180,7 +213,7 @@ export default function Register() {
                       type="password"
                       focus="true"
                       required
-                      className="appearance-none rounded-xl py-6 px-5 outline-none w-full text-lg font-light text-gray-800  "
+                      className="appearance-none rounded-xl py-5 px-5 outline-none w-full text-lg font-light text-gray-800  "
                       placeholder="Confirm Password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
@@ -188,15 +221,15 @@ export default function Register() {
                   </div>
                 </div>
                 <div className="w-full bg-white flex rounded-xl items-center pl-5 ">
-                  <Link size={30} className="text-black" />
+                  <Link size={24} className="text-black" />
                   <div>
                     <input
                       id="referralCode"
                       name="referralCode"
                       type="text"
                       focus="true"
-                      className="appearance-none rounded-xl py-6 px-5 outline-none w-full text-lg font-light text-gray-800  "
-                      placeholder="Referral code"
+                      className="appearance-none rounded-xl py-5 px-5 outline-none w-full text-lg font-light text-gray-800  "
+                      placeholder="Referral code (optional)"
                       value={referralCode}
                       onChange={(e) => setReferralCode(e.target.value)}
                     />
@@ -214,7 +247,7 @@ export default function Register() {
                 !isLoading ? (
                   "Register"
                 ) : (
-                  <Loader2 className="animate-spin" size={30} />
+                  <Loader2 className="animate-spin" size={24} />
                 )
               }
             ></Button>

@@ -4,7 +4,7 @@ import React from "react"
 const Button = ({ variant, className = "", children, icon, ...rest }) => {
   // Base class for the button using Tailwind CSS
   let baseClass =
-    "py-5 rounded-xl w-full font-medium text-sm flex items-center font-poppins justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2"
+    "py-5 rounded-xl w-full font-medium text-sm flex items-center font-poppins justify-center gap-2 focus:outline focus:ring-none focus:outline-2 focus:outline-offset-2 	"
 
   // Determine variant class using Tailwind CSS
   let variantClass = ""
@@ -19,7 +19,7 @@ const Button = ({ variant, className = "", children, icon, ...rest }) => {
       break
     case "black":
       variantClass =
-        "bg-black  text-white hover:bg-gray-900 focus:ring-gray-900"
+        "bg-black  text-white hover:bg-gray-900 focus:outline-gray-900"
       break
     case "white":
       variantClass =
