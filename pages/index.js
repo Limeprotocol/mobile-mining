@@ -1,20 +1,20 @@
-import Button from "components/ui/button"
-import { useRouter } from "next/router"
+import Button from "components/ui/button";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
-    <div className="min-h-[100dvh] fixed w-full top-0 flex md:items-center items-end px-5 md:py-0 py-16 font-poppins justify-center bg-primary">
-      <div className="w-full max-w-7xl flex md:flex-row flex-col   mx-auto">
-        <div className="md:w-[50%] w-full flex items-center justify-center"></div>
-        <div className="md:w-[50%] w-full  flex items-center justify-center">
-          <div className="md:max-w-md   w-full space-y-10 md:space-y-8    rounded-xl">
-            <div className="flex flex-col items-starts gap-3">
-              <h2 className="mt-6 text-left text-4xl font-extrabold font-raleway text-black">
+    <div className="font-poppins bg-primary fixed top-0 flex min-h-[100dvh] w-full items-end justify-center px-5 py-16 md:items-center md:py-0">
+      <div className="mx-auto flex w-full max-w-7xl flex-col   md:flex-row">
+        <div className="flex w-full items-center justify-center md:w-[50%]"></div>
+        <div className="flex w-full  items-center justify-center md:w-[50%]">
+          <div className="w-full   space-y-10 rounded-xl md:max-w-md    md:space-y-8">
+            <div className="items-starts flex flex-col gap-3">
+              <h2 className="font-raleway mt-6 text-left text-4xl font-extrabold text-black">
                 Secure your financial future with us.
               </h2>
-              <p className="text-gray-800 text-lg font-light">
+              <p className="text-lg font-light text-gray-800">
                 Your financial future, our priority. Secure your finances with
                 our trusted banking services.
               </p>
@@ -31,5 +31,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }

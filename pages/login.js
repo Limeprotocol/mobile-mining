@@ -1,53 +1,53 @@
 // pages/auth/login.js
-import { useEffect, useState } from "react"
-import { signIn } from "next-auth/react"
-import { useRouter } from "next/router"
-import Button from "components/ui/button"
-import { ArrowRight, ChevronLeft, Key, Loader2, Mail } from "lucide-react"
-import { browserPopupRedirectResolver, signInWithPopup } from "firebase/auth"
-import { auth, provider } from "../firebaseConfig"
+import { useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+import Button from "components/ui/button";
+import { ArrowRight, ChevronLeft, Key, Loader2, Mail } from "lucide-react";
+import { browserPopupRedirectResolver, signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../firebaseConfig";
 
 export default function Login() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const router = useRouter()
-  const [step, setStep] = useState(1)
-  const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+  const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
     try {
       const result = await signIn("credentials", {
         redirect: false, // Prevent NextAuth from redirecting automatically
         email,
         password,
-      })
+      });
       if (result.ok) {
-        router.push("/dashboard")
+        router.push("/dashboard");
       } else {
-        alert(result.error)
+        alert(result.error);
       }
     } catch (error) {
-      console.error("An unexpected error happened:", error)
+      console.error("An unexpected error happened:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleSubmitEmail = async (e) => {
-    e.preventDefault()
-    setStep(2)
-  }
+    e.preventDefault();
+    setStep(2);
+  };
 
   const handleGoolgeSignIn = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const res = await signInWithPopup(
         auth,
         provider,
-        browserPopupRedirectResolver
-      )
+        browserPopupRedirectResolver,
+      );
 
       const user = await signIn("credentials", {
         accessToken: res.user.accessToken,
@@ -55,26 +55,26 @@ export default function Login() {
         uid: res.user.uid,
         refreshToken: res.user.stsTokenManager.refreshToken,
         redirect: false,
-      })
+      });
 
-      router.push("/dashboard")
+      router.push("/dashboard");
     } catch (error) {
-      console.error("An unexpected error happened:", error)
+      console.error("An unexpected error happened:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="bg-primary  w-full fixed min-h-[100vh] h-[100dvh] top-0  flex flex-col justify-end md:justify-center ">
-      <div className="w-full max-w-7xl gap-5 flex md:flex-row items-center flex-col pb-14 md:pb-0 px-5 mx-auto">
+    <div className="bg-primary  fixed top-0 flex h-[100dvh] min-h-[100vh]  w-full flex-col justify-end md:justify-center ">
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-5 px-5 pb-14 md:flex-row md:pb-0">
         <Button
           variant="black"
-          className="w-max px-5 absolute top-5 left-5"
+          className="absolute left-5 top-5 w-max px-5"
           onClick={() => router.push("/")}
           icon={<ChevronLeft />}
         ></Button>
-        <div className="md:w-[50%] w-full flex items-center justify-center">
+        <div className="flex w-full items-center justify-center md:w-[50%]">
           <img
             src="/images/1.svg"
             alt="login"
@@ -84,19 +84,19 @@ export default function Login() {
         {step == 1 && (
           <form
             onSubmit={handleSubmitEmail}
-            className="md:max-w-[40%]  mx-auto  w-full space-y-4 md:space-y-3    rounded-xl"
+            className="mx-auto  w-full  space-y-4 rounded-xl md:max-w-[40%]    md:space-y-3"
           >
-            <div className="flex flex-col items-starts gap-3 mb-8">
-              <h2 className="mt-6 text-left text-4xl font-extrabold font-raleway text-black">
+            <div className="items-starts mb-8 flex flex-col gap-3">
+              <h2 className="font-raleway mt-6 text-left text-4xl font-extrabold text-black">
                 Welcome Back
               </h2>
-              <p className="text-gray-800 text-lg font-light">
+              <p className="text-lg font-light text-gray-800">
                 Log in using your email and password or just continue with your
                 Google account.
               </p>
             </div>
-            <div className="rounded-xl relative bg-white pr-2">
-              <div className="w-full flex items-center pl-5 ">
+            <div className="relative rounded-xl bg-white pr-2">
+              <div className="flex w-full items-center pl-5 ">
                 <Mail size={30} className="text-black" />
                 <input
                   id="email"
@@ -104,7 +104,7 @@ export default function Login() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-xl py-5 px-5 outline-none w-full text-lg font-light text-gray-800  "
+                  className="w-full appearance-none rounded-xl px-5 py-5 text-lg font-light text-gray-800 outline-none  "
                   placeholder="Email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -112,7 +112,7 @@ export default function Login() {
                 <Button
                   type="submit"
                   variant="black"
-                  className="px-5 py-4 w-max "
+                  className="w-max px-5 py-4 "
                   onClick={() => setStep(2)}
                   icon={<ArrowRight />}
                 ></Button>
@@ -179,18 +179,18 @@ export default function Login() {
         {step == 2 && (
           <form
             onSubmit={handleSubmit}
-            className="md:max-w-[40%]  mx-auto  w-full space-y-4 md:space-y-3    rounded-xl"
+            className="mx-auto  w-full  space-y-4 rounded-xl md:max-w-[40%]    md:space-y-3"
           >
-            <div className="flex flex-col items-starts gap-3 mb-8">
-              <h2 className="mt-6 text-left text-4xl font-extrabold font-raleway text-black">
+            <div className="items-starts mb-8 flex flex-col gap-3">
+              <h2 className="font-raleway mt-6 text-left text-4xl font-extrabold text-black">
                 Welcome Back
               </h2>
-              <p className="text-gray-800 text-lg font-light">
+              <p className="text-lg font-light text-gray-800">
                 Insert the password for the email address <b>{email}</b>
               </p>
             </div>
-            <div className="rounded-xl relative bg-white pr-2">
-              <div className="w-full flex items-center pl-5 ">
+            <div className="relative rounded-xl bg-white pr-2">
+              <div className="flex w-full items-center pl-5 ">
                 <Key size={30} className="text-black" />
                 <div className="w-full">
                   <label htmlFor="password" className="sr-only">
@@ -203,7 +203,7 @@ export default function Login() {
                     focus="true"
                     autoComplete="current-password"
                     required
-                    className="appearance-none  rounded-xl py-5 px-5 outline-none w-full text-lg font-light text-gray-800  "
+                    className="w-full  appearance-none rounded-xl px-5 py-5 text-lg font-light text-gray-800 outline-none  "
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -212,7 +212,7 @@ export default function Login() {
                 <Button
                   type="submit"
                   variant="black"
-                  className="px-5 py-4 w-max "
+                  className="w-max px-5 py-4 "
                   onClick={handleSubmit}
                   icon={
                     !isLoading ? (
@@ -239,5 +239,5 @@ export default function Login() {
         )}
       </div>
     </div>
-  )
+  );
 }
