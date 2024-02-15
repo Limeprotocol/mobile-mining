@@ -36,6 +36,8 @@ html,
 body {
   scroll-behavior: smooth;
   overflow: hidden;
+  height: 100dvh;
+  max-height: 100dvh;
 }
 
 input:-webkit-autofill,
