@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 export default function Home() {
   const router = useRouter();
 
+  //ciao
+
   return (
     <div className="font-poppins bg-primary fixed top-0 flex min-h-[100dvh] w-full items-end justify-center px-5 py-16 md:items-center md:py-0">
       <div className="mx-auto flex w-full max-w-7xl flex-col   md:flex-row">

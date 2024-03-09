@@ -1,10 +1,10 @@
 // pages/auth/login.js
-import { useEffect, useState } from "react";
+import Button from "components/ui/button";
+import { browserPopupRedirectResolver, signInWithPopup } from "firebase/auth";
+import { ArrowRight, ChevronLeft, Key, Loader2, Mail } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import Button from "components/ui/button";
-import { ArrowRight, ChevronLeft, Key, Loader2, Mail } from "lucide-react";
-import { browserPopupRedirectResolver, signInWithPopup } from "firebase/auth";
+import { useState } from "react";
 import { auth, provider } from "../firebaseConfig";
 
 export default function Login() {
