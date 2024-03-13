@@ -98,7 +98,7 @@ export default function Register() {
               </p>
             </div>
             <div className=" relative  ">
-              <div className="w-full flex items-center bg-white rounded-xl pr-2  pl-5 ">
+              <div className="w-full flex items-center bg-white rounded-xl pr-2 py-2  pl-5 ">
                 <Mail size={30} className="text-black" />
                 <input
                   id="email"
@@ -106,7 +106,7 @@ export default function Register() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-xl py-5 px-5 outline-none w-full text-lg font-light text-gray-800  "
+                  className="appearance-none rounded-xl py-3 px-5 outline-none w-full text-lg font-light text-gray-800  "
                   placeholder="Email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

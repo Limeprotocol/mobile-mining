@@ -1,53 +1,53 @@
 // pages/auth/login.js
-import Button from "components/ui/button";
-import { browserPopupRedirectResolver, signInWithPopup } from "firebase/auth";
-import { ArrowRight, ChevronLeft, Key, Loader2, Mail } from "lucide-react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { auth, provider } from "../firebaseConfig";
+import Button from "components/ui/button"
+import { browserPopupRedirectResolver, signInWithPopup } from "firebase/auth"
+import { ArrowRight, ChevronLeft, Key, Loader2, Mail } from "lucide-react"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/router"
+import { useState } from "react"
+import { auth, provider } from "../firebaseConfig"
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter();
-  const [step, setStep] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const router = useRouter()
+  const [step, setStep] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+    e.preventDefault()
+    setIsLoading(true)
     try {
       const result = await signIn("credentials", {
         redirect: false, // Prevent NextAuth from redirecting automatically
         email,
         password,
-      });
+      })
       if (result.ok) {
-        router.push("/dashboard");
+        router.push("/dashboard")
       } else {
-        alert(result.error);
+        alert(result.error)
       }
     } catch (error) {
-      console.error("An unexpected error happened:", error);
+      console.error("An unexpected error happened:", error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const handleSubmitEmail = async (e) => {
-    e.preventDefault();
-    setStep(2);
-  };
+    e.preventDefault()
+    setStep(2)
+  }
 
   const handleGoolgeSignIn = async () => {
     try {
-      setIsLoading(true);
+      setIsLoading(true)
       const res = await signInWithPopup(
         auth,
         provider,
-        browserPopupRedirectResolver,
-      );
+        browserPopupRedirectResolver
+      )
 
       const user = await signIn("credentials", {
         accessToken: res.user.accessToken,
@@ -55,15 +55,15 @@ export default function Login() {
         uid: res.user.uid,
         refreshToken: res.user.stsTokenManager.refreshToken,
         redirect: false,
-      });
+      })
 
-      router.push("/dashboard");
+      router.push("/dashboard")
     } catch (error) {
-      console.error("An unexpected error happened:", error);
+      console.error("An unexpected error happened:", error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <div className="bg-primary  fixed top-0 flex h-[100dvh] min-h-[100vh]  w-full flex-col justify-end md:justify-center ">
@@ -95,7 +95,7 @@ export default function Login() {
                 Google account.
               </p>
             </div>
-            <div className="relative rounded-xl bg-white pr-2">
+            <div className="relative rounded-xl bg-white pr-2 py-2">
               <div className="flex w-full items-center pl-5 ">
                 <Mail size={30} className="text-black" />
                 <input
@@ -104,7 +104,7 @@ export default function Login() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="w-full appearance-none rounded-xl px-5 py-5 text-lg font-light text-gray-800 outline-none  "
+                  className="w-full appearance-none rounded-xl px-5 py-3 text-lg font-light text-gray-800 outline-none  "
                   placeholder="Email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -239,5 +239,5 @@ export default function Login() {
         )}
       </div>
     </div>
-  );
+  )
 }

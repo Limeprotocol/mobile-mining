@@ -6,7 +6,7 @@ import React from "react"
 const index = () => {
   const router = useRouter()
   const { data: session } = useSession()
-
+  console.log(session)
   const axiosAuth = useAxiosAuth()
 
   const test401 = async () => {
