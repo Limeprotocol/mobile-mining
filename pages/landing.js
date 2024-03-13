@@ -164,9 +164,7 @@ const Landing = () => {
                 <div className="bg-gray-700 w-max p-2 rounded-full">
                   <Check size={25} />
                 </div>
-                <h1 className="text-xl font-bold">
-                  Mine $LIME through $USDT Staking
-                </h1>
+                <h1 className="text-xl font-bold">Mine $LIME through $USDT</h1>
               </div>
 
               <p className="text-sm">
@@ -223,9 +221,7 @@ const Landing = () => {
                 <div className="bg-gray-700 w-max p-2 rounded-full">
                   <Check size={25} />
                 </div>
-                <h1 className="text-xl font-bold">
-                  $LIME, the Ecosystem's Heartbeat
-                </h1>
+                <h1 className="text-xl font-bold">$LIME token</h1>
               </div>
 
               <p className="text-sm">
@@ -242,8 +238,8 @@ const Landing = () => {
               </div>
 
               <p className="text-sm">
-                WOW EARN encourages community members to help each other and
-                rewards users for collaboration in development, marketing,
+                Lime Protocol encourages community members to help each other
+                and rewards users for collaboration in development, marketing,
                 sharing, and more.
               </p>
             </div>
