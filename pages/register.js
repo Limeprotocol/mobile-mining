@@ -22,6 +22,7 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e) => {
+    return
     setIsLoading(true)
     if (password !== confirmPassword) {
       toast.error("Passwords do not match")
@@ -49,11 +50,13 @@ export default function Register() {
   }
 
   const handleSubmitEmail = async (e) => {
+    return
     e.preventDefault()
     setStep(2)
   }
 
   const handleGoolgeSignIn = async () => {
+    return
     try {
       const res = await signInWithPopup(
         auth,

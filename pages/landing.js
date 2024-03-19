@@ -99,18 +99,36 @@ const Landing = () => {
       <div className="w-full items-center p-4 max-w-6xl mx-auto flex justify-between">
         <h1 className="font-bold text-lg">LIME PROTOCOL</h1>
         <ul className=" gap-6 hidden md:flex">
-          <li>Home</li>
-          <li>Mining</li>
-          <li>Delegated Trading</li>
-          <li>$LIME</li>
-          <li>Docs</li>
-          <li>Socials</li>
+          <li className="cursor-pointer hover:underline underline-offset-4 transition-all ">
+            <a href="#home">Home</a>
+          </li>
+          <li
+            href="#mining"
+            className="cursor-pointer hover:underline underline-offset-4 transition-all "
+          >
+            <a href="#mining">Mining</a>
+          </li>
+          <li
+            href="#delegated"
+            className="cursor-pointer hover:underline underline-offset-4 transition-all "
+          >
+            <a href="#delegated">Delegated Trading</a>
+          </li>
+          <li
+            href="#token"
+            className="cursor-pointer hover:underline underline-offset-4 transition-all "
+          >
+            <a href="#token">$LIME Token</a>
+          </li>
         </ul>
-        <button className="bg-[#DFF26A] text-black px-4 py-2 rounded-md mr-4">
+        <button
+          disabled
+          className="bg-[#DFF26A] text-black px-4 py-2 rounded-md mr-4"
+        >
           ENTER DAPP
         </button>
       </div>
-      <div className=" relative flex items-center justify-center">
+      <div id="home" className=" relative flex items-center justify-center">
         {init && (
           <Particles
             id="tsparticles"
@@ -127,10 +145,14 @@ const Landing = () => {
                 world web3 Platform
               </h1>
               <div className="flex mt-8">
-                <button className="bg-[#DFF26A] text-black px-4 py-2 rounded-md mr-4">
+                <button
+                  disabled
+                  className="bg-[#DFF26A] text-black px-4 py-2 rounded-md mr-4"
+                >
                   ENTER DAPP
                 </button>
                 <button
+                  disabled
                   className="bg-transparent text-[#DFF26A] px-4 py-2 rounded-md border border-[#DFF26A]"
                   onClick={() => {
                     window.scrollTo({
@@ -247,7 +269,7 @@ const Landing = () => {
         </div>
       </div>
       <div>
-        <div className="p-4 max-w-6xl mx-auto mt-14">
+        <div id="delegated" className="p-4 max-w-6xl mx-auto mt-14">
           <div className="flex md:flex-row flex-col-reverse items-center justify-between">
             <div className="md:w-[60%] w-full">
               <h1 className="text-2xl font-bold">
@@ -281,7 +303,7 @@ const Landing = () => {
         </div>
       </div>
       <div>
-        <div className="p-4 max-w-6xl mx-auto mt-14">
+        <div id="mining" className="p-4 max-w-6xl mx-auto mt-14">
           <div className="flex md:flex-row flex-col gap-10 items-center">
             <div className="md:w-[60%] w-full">
               <h1 className="text-2xl font-bold">
@@ -352,7 +374,7 @@ const Landing = () => {
         </div>
       </div> */}
       <div>
-        <div className="p-4 max-w-6xl mx-auto ">
+        <div id="token" className="p-4 max-w-6xl mx-auto ">
           <div className="flex md:flex-row flex-col gap-10 items-center">
             <div className="md:w-[60%] w-full">
               <h1 className="text-2xl font-bold">
