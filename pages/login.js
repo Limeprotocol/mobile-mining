@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { auth, provider } from "../firebaseConfig"
+import axios from "../lib/axios"
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -48,11 +49,22 @@ export default function Login() {
         provider,
         browserPopupRedirectResolver
       )
-
+      const resUser = await axios.post(
+        "/user/create",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${res.user.accessToken}`,
+          },
+        }
+      )
+      const data = resUser.data.user_info
       const user = await signIn("credentials", {
         accessToken: res.user.accessToken,
-        email: res.user.email,
-        uid: res.user.uid,
+        user_uid: data.user_uid,
+        address: data.address,
+        code: data.code,
+        status: data.status,
         refreshToken: res.user.stsTokenManager.refreshToken,
         redirect: false,
       })

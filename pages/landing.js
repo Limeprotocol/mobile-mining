@@ -98,7 +98,7 @@ const Landing = () => {
     <div className="flex flex-col bg-[#0c0c0c]   min-h-screen h-full">
       <div className="w-full items-center p-4 max-w-6xl mx-auto flex justify-between">
         <h1 className="font-bold text-lg">LIME PROTOCOL</h1>
-        <ul className="flex gap-6">
+        <ul className=" gap-6 hidden md:flex">
           <li>Home</li>
           <li>Mining</li>
           <li>Delegated Trading</li>
@@ -119,7 +119,7 @@ const Landing = () => {
             className="!h-full absolute top-0 left-0 w-full  z-0"
           />
         )}
-        <div className="px-4  py-48 max-w-6xl">
+        <div className="px-4  md:py-48 py-24 max-w-6xl">
           <div className="flex-col-reverse  md:flex-row flex gap-10 w-full items-center">
             <div className="flex flex-col md:w-[60%] w-full">
               <h1 className="font-bold text-3xl">

@@ -3,9 +3,14 @@ import { signIn } from "next-auth/react"
 import { useRouter } from "next/router"
 import Button from "components/ui/button"
 import { ArrowRight, ChevronLeft, Key, Link, Loader2, Mail } from "lucide-react"
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth"
+import {
+  browserPopupRedirectResolver,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth"
 import { auth, provider } from "../firebaseConfig"
 import toast from "react-hot-toast"
+import axios from "lib/axios"
 
 export default function Register() {
   const [email, setEmail] = useState("")
@@ -50,12 +55,27 @@ export default function Register() {
 
   const handleGoolgeSignIn = async () => {
     try {
-      const res = await signInWithPopup(auth, provider)
-
+      const res = await signInWithPopup(
+        auth,
+        provider,
+        browserPopupRedirectResolver
+      )
+      const resUser = await axios.post(
+        "/user/create",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${res.user.accessToken}`,
+          },
+        }
+      )
+      const data = resUser.data.user_info
       await signIn("credentials", {
         accessToken: res.user.accessToken,
-        email: res.user.email,
-        uid: res.user.uid,
+        user_uid: data.user_uid,
+        address: data.address,
+        code: data.code,
+        status: data.status,
         refreshToken: res.user.stsTokenManager.refreshToken,
         redirect: false,
       })

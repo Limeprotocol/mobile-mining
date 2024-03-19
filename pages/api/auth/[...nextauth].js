@@ -8,6 +8,7 @@ import {
   setPersistence,
   localStoragePersistence,
 } from "firebase/auth"
+import axios from "lib/axios"
 
 // import { doc, getDoc } from "firebase/firestore"
 
@@ -39,34 +40,51 @@ export default NextAuth({
           if (
             !credentials.accessToken ||
             !credentials.refreshToken ||
-            !credentials.uid
+            !credentials.user_uid ||
+            !credentials.address ||
+            !credentials.code ||
+            !credentials.status
           ) {
             const userCredential = await signInWithEmailAndPassword(
               auth,
               credentials.email,
               credentials.password
             )
+
+            const res = await axios.post(
+              "/user/create",
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${userCredential.user.stsTokenManager.accessToken}`,
+                },
+              }
+            )
+            console.log("resSSSSSSSSSS", res.data)
+            const data = res.data.user_info
             const user = userCredential.user
-            //   const docRef = doc(db, "users", user.uid)
-            //   const docSnap = await getDoc(docRef)
 
             if (user) {
               return {
-                id: user.uid,
-                email: user.email,
+                user_uid: data.user_uid,
+                address: data.address,
+                code: data.code,
+                status: data.status,
                 accessToken: user.stsTokenManager.accessToken,
                 refreshToken: user.stsTokenManager.refreshToken,
-                //   name: docSnap.data().username,
               }
             }
           }
           return {
-            id: credentials.uid,
-            email: credentials.email,
+            user_id: credentials.user_uid,
+            address: credentials.address,
+            code: credentials.code,
+            status: credentials.status,
             accessToken: credentials.accessToken,
             refreshToken: credentials.refreshToken,
           }
         } catch (error) {
+          console.log("error", error)
           throw new Error(error.message)
         }
       },
@@ -75,20 +93,23 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.uid = user.id
-        token.email = user.email
-        // token.name = user.name
+        token.user_uid = user.user_uid
+        token.address = user.address
+        token.code = user.code
+        token.status = user.status
         token.accessToken = user.accessToken
         token.refreshToken = user.refreshToken
       }
       return token
     },
     async session({ session, token }) {
-      session.user.uid = token.uid
-      session.user.email = token.email
-      //   session.user.username = token.name
+      session.user.user_uid = token.user_uid
+      session.user.address = token.address
+      session.user.code = token.code
+      session.user.status = token.status
       session.user.accessToken = token.accessToken
       session.user.refreshToken = token.refreshToken
+      console.log("session", session)
       return session
     },
   },
