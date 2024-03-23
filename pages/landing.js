@@ -141,8 +141,8 @@ const Landing = () => {
           <div className="flex-col-reverse  md:flex-row flex gap-10 w-full items-center">
             <div className="flex flex-col md:w-[60%] w-full">
               <h1 className="font-bold text-3xl">
-                Building a seamless connection between users and the blockchain
-                world web3 Platform
+                Unlocking the Future of Digital Assets with Lime Protocol: Where
+                Every Click Mines Value
               </h1>
               <div className="flex mt-8">
                 <button
@@ -376,9 +376,12 @@ const Landing = () => {
       <div>
         <div id="token" className="p-4 max-w-6xl mx-auto ">
           <div className="flex md:flex-row flex-col gap-10 items-center">
-            <div className="md:w-[60%] w-full">
+            <div>
+              <img src="/images/pie.png" alt="" className="max-w-[450px]" />
+            </div>
+            <div className="md:w-[50%] w-full">
               <h1 className="text-2xl font-bold">
-                <span className="text-[#DFF26A]">$Lime Coin</span>
+                <span className="text-[#DFF26A]">$LIME Coin</span>
               </h1>
               <h1 className="text-base font-bold mt-4">
                 $LIME stands as the cornerstone of the Mobile Miner ecosystem,
@@ -401,9 +404,6 @@ const Landing = () => {
                   8% tax
                 </li>
               </ul>
-            </div>
-            <div>
-              <img src="/images/aa.webp" alt="" />
             </div>
           </div>
         </div>
