@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadSlim } from "@tsparticles/slim"
-import { Check, Shield } from "lucide-react"
+import { Check, Shield, TwitterIcon } from "lucide-react"
 
 const Landing = () => {
   const [init, setInit] = useState(false)
@@ -125,7 +125,7 @@ const Landing = () => {
           disabled
           className="bg-[#DFF26A] text-black px-4 py-2 rounded-md mr-4"
         >
-          ENTER DAPP
+          dApp Coming
         </button>
       </div>
       <div id="home" className=" relative flex items-center justify-center">
@@ -149,7 +149,7 @@ const Landing = () => {
                   disabled
                   className="bg-[#DFF26A] text-black px-4 py-2 rounded-md mr-4"
                 >
-                  ENTER DAPP
+                  dApp Coming
                 </button>
                 <button
                   disabled
@@ -373,11 +373,15 @@ const Landing = () => {
           </div>
         </div>
       </div> */}
-      <div>
+      <div className="py-20">
         <div id="token" className="p-4 max-w-6xl mx-auto ">
-          <div className="flex md:flex-row flex-col gap-10 items-center">
+          <div className="flex md:flex-row flex-col-reverse gap-10 items-center">
             <div>
-              <img src="/images/pie.png" alt="" className="max-w-[450px]" />
+              <img
+                src="/images/pie.png"
+                alt=""
+                className="md:max-w-[450px] w-full"
+              />
             </div>
             <div className="md:w-[50%] w-full">
               <h1 className="text-2xl font-bold">
@@ -395,6 +399,42 @@ const Landing = () => {
                   50,000,000 $TOKEN
                 </li>
                 <li>
+                  - <span className="text-[#DFF26A]">Low Risk Staking:</span>{" "}
+                  30% of the total supply is allocated here, offering a safer
+                  investment option.
+                </li>
+                <li>
+                  - <span className="text-[#DFF26A]">Mid Risk Staking:</span>{" "}
+                  20% of the total supply is allocated here, balancing risk and
+                  reward.
+                </li>
+                <li>
+                  - <span className="text-[#DFF26A]">High Risk Staking:</span>{" "}
+                  Another 20% is set aside for high-risk strategies, catering to
+                  those who seek higher returns.
+                </li>
+                <li>
+                  -{" "}
+                  <span className="text-[#DFF26A]">
+                    Centrilized Exchanges (CEX):
+                  </span>{" "}
+                  5% is allocated for liquidity and operations on centralized
+                  exchanges.
+                </li>
+                <li>
+                  -{" "}
+                  <span className="text-[#DFF26A]">
+                    Decentrilized Exchanges (DEX):
+                  </span>{" "}
+                  2% goes towards supporting decentralized exchanges liquidity
+                  and activities.
+                </li>
+                <li>
+                  - <span className="text-[#DFF26A]">Team Allocation:</span> 18%
+                  is reserved for the team, ensuring continued development and
+                  management of the Lime Protocol platform.
+                </li>
+                <li>
                   - <span className="text-[#DFF26A]">Buying Transactions:</span>{" "}
                   4% tax
                 </li>
@@ -408,6 +448,28 @@ const Landing = () => {
           </div>
         </div>
       </div>
+      <footer className="bg-[#141414] p-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div>
+            <h1 className="text-lg font-bold">LIME PROTOCOL</h1>
+            <p className="text-sm">
+              © {new Date().getFullYear()} {` `}Lime Protocol. All rights
+              reserved.
+            </p>
+          </div>
+          <div className="flex gap-4">
+            <a href="https://twitter.com/LimeProtocol" target="_blank">
+              <TwitterIcon size={25} />
+            </a>
+            <a href="https://t.me/LimeProtocol" target="_blank">
+              <img src="/images/telegram.svg" alt="" />
+            </a>
+            <a href="https://discord.gg/2hJ7Q3RJ" target="_blank">
+              <img src="/images/discord.svg" alt="" />
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
