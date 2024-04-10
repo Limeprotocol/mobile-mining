@@ -16,7 +16,6 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e) => {
-    return
     e.preventDefault()
     setIsLoading(true)
     try {
@@ -38,13 +37,11 @@ export default function Login() {
   }
 
   const handleSubmitEmail = async (e) => {
-    return
     e.preventDefault()
     setStep(2)
   }
 
   const handleGoolgeSignIn = async () => {
-    return
     try {
       setIsLoading(true)
       const res = await signInWithPopup(
@@ -53,7 +50,7 @@ export default function Login() {
         browserPopupRedirectResolver
       )
       const resUser = await axios.post(
-        "/user/create",
+        "api/user/create",
         {},
         {
           headers: {

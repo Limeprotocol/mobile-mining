@@ -45,22 +45,19 @@ export default NextAuth({
             !credentials.code ||
             !credentials.status
           ) {
-            const userCredential = await signInWithEmailAndPassword(
-              auth,
-              credentials.email,
-              credentials.password
-            )
+            //   const userCredential = await signInWithEmailAndPassword(
+            auth, credentials.email, credentials.password
+            //  )
 
-            const res = await axios.post(
-              "/user/create",
+            //   const res = await axios.post(
+            "api/user/create",
               {},
               {
                 headers: {
                   Authorization: `Bearer ${userCredential.user.stsTokenManager.accessToken}`,
                 },
               }
-            )
-            console.log("resSSSSSSSSSS", res.data)
+            //   )
             const data = res.data.user_info
             const user = userCredential.user
 
@@ -91,7 +88,10 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update") {
+        return { ...token, ...session, ...user }
+      }
       if (user) {
         token.user_uid = user.user_uid
         token.address = user.address

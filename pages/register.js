@@ -22,7 +22,6 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e) => {
-    return
     setIsLoading(true)
     if (password !== confirmPassword) {
       toast.error("Passwords do not match")
@@ -56,7 +55,6 @@ export default function Register() {
   }
 
   const handleGoolgeSignIn = async () => {
-    return
     try {
       const res = await signInWithPopup(
         auth,
@@ -64,7 +62,7 @@ export default function Register() {
         browserPopupRedirectResolver
       )
       const resUser = await axios.post(
-        "/user/create",
+        "api/user/create",
         {},
         {
           headers: {

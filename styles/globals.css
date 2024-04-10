@@ -47,3 +47,73 @@ input:-webkit-autofill:active {
   -webkit-background-clip: text;
   -webkit-text-fill-color: black;
 }
+
+.embla {
+  margin: auto;
+  --slide-height: 19rem;
+  --slide-spacing: 0rem;
+  --slide-size: 100%;
+}
+.embla__viewport {
+  overflow: hidden;
+}
+.embla__container {
+  backface-visibility: hidden;
+  display: flex;
+  touch-action: pan-y;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+.embla__slide {
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+}
+
+.tab-selector {
+  display: flex;
+  justify-content: center;
+}
+
+.tabs-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  /* Adjust as needed */
+}
+
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  color: #333;
+  font-weight: bold;
+  background-color: transparent;
+  transition: background-color 0.3s;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.tab.active {
+  font-weight: bold;
+  color: #333;
+  z-index: 10;
+}
+
+.highlight {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  background-color: #dff26a;
+  border-radius: 9999px;
+  transition: transform 0.3s;
+}
+
+.highlight.left {
+  transform: translateX(0%);
+}
+
+.highlight.right {
+  transform: translateX(100%);
+}
+
+/* Additional styling for the buttons to match the design as needed */

@@ -1,7 +1,16 @@
+import { Loader2, Lock } from "lucide-react"
 import { useRouter } from "next/router"
 import React from "react"
 
-const Button = ({ variant, className = "", children, icon, ...rest }) => {
+const Button = ({
+  variant,
+  className = "",
+  children,
+  icon,
+  loading,
+  locked,
+  ...rest
+}) => {
   // Base class for the button using Tailwind CSS
   let baseClass =
     "py-5 rounded-xl w-full font-medium text-sm flex items-center font-poppins justify-center gap-2 focus:outline focus:ring-none focus:outline-2 focus:outline-offset-2 	"
@@ -10,8 +19,7 @@ const Button = ({ variant, className = "", children, icon, ...rest }) => {
   let variantClass = ""
   switch (variant) {
     case "primary":
-      variantClass =
-        "bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500"
+      variantClass = "bg-[#DFF26A] text-[#1C1C1C] font-bold text-[18px] "
       break
     case "outline":
       variantClass =
@@ -28,11 +36,19 @@ const Button = ({ variant, className = "", children, icon, ...rest }) => {
   }
 
   // Combine classes
-  const classes = `${baseClass} ${variantClass} ${className}`.trim()
+  const classes = `${baseClass} relative  ${variantClass} ${className}`.trim()
 
   return (
-    <button className={classes} {...rest}>
+    <button className={classes} {...rest} disabled={rest.disabled || loading}>
+      {locked && (
+        <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-[#1c1c1c]/20 text-primary font-bold text-[14px]">
+          <div className="bg-black rounded-full p-2">
+            <Lock size={18} />
+          </div>
+        </div>
+      )}
       {icon && <span className="flex items-center justify-center">{icon}</span>}
+      {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
       {children}
     </button>
   )

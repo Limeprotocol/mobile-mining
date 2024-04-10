@@ -1,10 +1,17 @@
-import Button from "components/ui/button";
-import { useRouter } from "next/router";
+import Button from "components/ui/button"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/router"
+import { useEffect } from "react"
 
 export default function Home() {
-  const router = useRouter();
+  const { data: session } = useSession()
+  const router = useRouter()
 
-  //ciao
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard")
+    }
+  }, [session])
 
   return (
     <div className="font-poppins bg-primary fixed top-0 flex min-h-[100dvh] w-full items-end justify-center px-5 py-16 md:items-center md:py-0">
@@ -33,5 +40,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  );
+  )
 }
