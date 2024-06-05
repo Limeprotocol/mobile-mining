@@ -13,7 +13,7 @@ const RefModal = () => {
   const updateUserInfo = async () => {
     setIsLoading(true)
     const res = await axiosAuth.post("api/user/status/update", {
-      refcode: referralCode,
+      refcode: referralCode
     })
     if (res.status === 200) {
       console.log(res)
@@ -25,7 +25,7 @@ const RefModal = () => {
     }
   }
   return (
-    <div className="bg-primary mx-auto fixed top-0 left-0 flex h-[100dvh] min-h-[100vh]  w-full flex-col md:justify-center justify-end ">
+    <div className="bg-primary mx-auto fixed z-[50] top-0 left-0 flex h-[100dvh] min-h-[100vh]  w-full flex-col md:justify-center justify-end ">
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-5 px-5 pb-14 md:flex-row md:pb-0">
         <div className="flex w-full items-center justify-center md:w-[50%]">
           <img

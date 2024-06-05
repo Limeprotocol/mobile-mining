@@ -9,28 +9,28 @@ const BottomMenu = () => {
     {
       name: "Home",
       icon: <Home className="w-[18px] h-[18px]" />,
-      link: "/dashboard",
+      link: "/dashboard"
     },
     {
       name: "Mining",
       icon: <Pickaxe className="w-[18px] h-[18px]" />,
-      link: "/dashboard/mining",
+      link: "/dashboard/mining"
     },
     {
       name: "Trading",
       icon: <RefreshCcwDot className="w-[18px] h-[18px]" />,
-      link: "/dashboard/trading",
+      link: "/dashboard/trading"
     },
     {
       name: "Earnings",
       icon: <Sparkles className="w-[18px] h-[18px]" />,
-      link: "/dashboard/earnings",
+      link: "/dashboard/earnings"
     },
     {
       name: "Profile",
       icon: <Wallet className="w-[18px] h-[18px]" />,
-      link: "/dashboard/profile",
-    },
+      link: "/dashboard/profile"
+    }
   ]
 
   return (
@@ -42,7 +42,7 @@ const BottomMenu = () => {
       {pages.map((page, index) => (
         <div
           key={index}
-          className={`flex flex-col w-full items-center py-4  ${
+          className={`flex flex-col w-full items-center pt-4 pb-8  ${
             router.asPath.split("/")[2] === page.link.split("/")[2]
               ? "border-primary border-t-4 "
               : "text-gray-500 border-t-2 border-transparent"

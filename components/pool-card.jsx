@@ -1,32 +1,38 @@
-import React, { useEffect, useState } from "react"
 import useAxiosAuth from "lib/hooks/useAxiosAuth"
+import { parseLime } from "lib/utils/helper"
 import { useSession } from "next-auth/react"
-import { parseLime, parseUsdt } from "lib/utils/helper"
+import React, { useEffect, useState } from "react"
 
-const MiningCard = () => {
+const PoolCard = ({ name, limePrice }) => {
   const { data: session } = useSession()
   const axiosAuth = useAxiosAuth()
   const [pool, setPool] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
   const fetchPoolData = async () => {
-    const res = await axiosAuth.get(`/api/pools/mining/info`)
+    const res = await axiosAuth.get(`/api/pools/${name}/info`)
     const pool = res.data.data
     setPool(pool)
     setIsLoading(false)
   }
 
   useEffect(() => {
-    if (!session) return
-    fetchPoolData()
+    if (session) {
+      fetchPoolData()
+    }
   }, [session])
 
+  function aprToDailyApr(apr) {
+    return apr / 365
+  }
+
   return (
-    <div className="   bg-[#1c1c1c] text-white rounded-xl  flex flex-col  w-full h-max">
+    <div className="embla__slide bg-[#1c1c1c] text-white flex flex-col w-full h-max">
       {isLoading ? (
         <div className="animate-pulse">
           <div className="w-full p-5 justify-between flex">
             <div className="bg-gray-700 rounded h-10 w-1/2"></div>
+            <div className="bg-gray-700 rounded-full h-10 w-20"></div>
           </div>
           <div className="w-[90%] mx-auto h-[1px] bg-white/30 rounded-full"></div>
           <div className="w-full justify-between p-5 flex">
@@ -43,9 +49,15 @@ const MiningCard = () => {
       ) : (
         <>
           <div className="w-full p-5 justify-between flex">
-            <h1 className="uppercase text-[26px] font-bold">USDT / $LIME</h1>
+            <h1 className="uppercase text-[26px] font-bold">{name} TERM</h1>
+            <div className="bg-[#DFF26A] rounded-full text-[#1c1c1c] px-3 py-1.5">
+              <span className="font-bold mr-1 text-[14px]">
+                {aprToDailyApr(pool.apr).toFixed(1)}%
+              </span>
+              <span className="text-[11px]">/day</span>
+            </div>
           </div>
-          <div className="w-[90%] mx-auto h-[1px] bg-white/30 rounded-full" />
+          <div className="w-[90%] mx-auto h-[1px] bg-white/30 rounded-full"></div>
           <div className="w-full justify-between p-5 flex">
             <div className="flex flex-col items-start">
               <h1 className="text-[18px] text-[#DFF26A]">APR</h1>
@@ -54,7 +66,10 @@ const MiningCard = () => {
             <div className="flex flex-col items-end ml-5">
               <h1 className="text-[18px] text-[#DFF26A]">TVL</h1>
               <h2 className="text-[22px] font-bold">
-                $ {parseLime(pool.totalStaked).toLocaleString()}
+                $
+                {Math.ceil(
+                  parseLime(pool.totalStaked) / limePrice
+                ).toLocaleString()}
               </h2>
             </div>
           </div>
@@ -64,4 +79,4 @@ const MiningCard = () => {
   )
 }
 
-export default MiningCard
+export default PoolCard

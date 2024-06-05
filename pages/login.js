@@ -22,7 +22,7 @@ export default function Login() {
       const result = await signIn("credentials", {
         redirect: false, // Prevent NextAuth from redirecting automatically
         email,
-        password,
+        password
       })
       if (result.ok) {
         router.push("/dashboard")
@@ -54,8 +54,8 @@ export default function Login() {
         {},
         {
           headers: {
-            Authorization: `Bearer ${res.user.accessToken}`,
-          },
+            Authorization: `Bearer ${res.user.accessToken}`
+          }
         }
       )
       const data = resUser.data.user_info
@@ -66,7 +66,7 @@ export default function Login() {
         code: data.code,
         status: data.status,
         refreshToken: res.user.stsTokenManager.refreshToken,
-        redirect: false,
+        redirect: false
       })
 
       router.push("/dashboard")
@@ -79,14 +79,14 @@ export default function Login() {
 
   return (
     <div className="bg-primary  fixed top-0 flex h-[100dvh] min-h-[100vh]  w-full flex-col justify-end md:justify-center ">
-      <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-5 px-5 pb-14 md:flex-row md:pb-0">
-        <Button
-          variant="black"
-          className="absolute left-5 top-5 w-max px-5"
-          onClick={() => router.push("/")}
-          icon={<ChevronLeft />}
-        ></Button>
-        <div className="flex w-full items-center justify-center md:w-[50%]">
+      <button
+        className="  absolute  top-5 z-20  left-5 bg-black rounded-lg w-max p-5"
+        onClick={() => router.push("/")}
+      >
+        <ChevronLeft size={30} className="text-white" />
+      </button>
+      <div className="mx-auto flex w-full max-w-7xl flex-col md:items-center items-start gap-5 px-5 pb-14 md:flex-row md:pb-0">
+        <div className="flex w-full flex-1 flex-col relative items-center justify-center md:w-[50%]">
           <img
             src="/images/1.svg"
             alt="login"
@@ -201,7 +201,7 @@ export default function Login() {
                 Insert the password for the email address <b>{email}</b>
               </p>
             </div>
-            <div className="relative rounded-xl bg-white pr-2">
+            <div className="relative rounded-xl bg-white pr-2 py-2">
               <div className="flex w-full items-center pl-5 ">
                 <Key size={30} className="text-black" />
                 <div className="w-full">

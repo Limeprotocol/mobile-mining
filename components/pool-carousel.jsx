@@ -1,72 +1,47 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import useEmblaCarousel from "embla-carousel-react"
 import { ChevronLeft, ChevronRight, Wallet } from "lucide-react"
+import PoolCard from "./pool-card"
+import { useSession } from "next-auth/react"
+import useAxiosAuth from "lib/hooks/useAxiosAuth"
 
 const PoolCarousel = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
-
-  useEffect(() => {
-    if (emblaApi) {
-      console.log(emblaApi.slideNodes()) // Access API
-    }
-  }, [emblaApi])
+  const [price, setPrice] = useState(0)
+  const { data: session } = useSession()
+  const axiosAuth = useAxiosAuth()
 
   const pools = [
     {
-      name: "long",
-      daily: 1.97,
-      apy: 54180,
-      tvl: 5456234,
+      name: "long"
     },
     {
-      name: "mid",
-      daily: 1.97,
-      apy: 54180,
-      tvl: 5456234,
+      name: "mid"
     },
     {
-      name: "short",
-      daily: 1.97,
-      apy: 54180,
-      tvl: 5456234,
-    },
+      name: "short"
+    }
   ]
 
   const scrollPrev = () => emblaApi && emblaApi.scrollPrev()
   const scrollNext = () => emblaApi && emblaApi.scrollNext()
+
+  const getPrice = async (pool) => {
+    const res = await axiosAuth.get(`/api/token/lime/price`)
+    setPrice(res.data.price)
+  }
+
+  useEffect(() => {
+    if (!session) return
+    getPrice()
+  }, [session])
 
   return (
     <div className="embla relative  ">
       <div className="embla__viewport  rounded-xl" ref={emblaRef}>
         <div className="embla__container ">
           {pools.map((pool, index) => (
-            <div
-              key={index}
-              className="embla__slide   bg-[#1c1c1c] text-white  flex flex-col  w-full h-max"
-            >
-              <div className="w-full p-5 justify-between flex">
-                <h1 className="uppercase text-[26px] font-bold">
-                  {pool.name} TERM
-                </h1>
-                <div className="bg-[#DFF26A] rounded-full text-[#1c1c1c] px-3 py-1.5">
-                  <span className="font-bold mr-1 text-[14px]">
-                    {pool.daily}%
-                  </span>
-                  <span className="text-[11px]">/day</span>
-                </div>
-              </div>
-              <div className="w-[90%] mx-auto h-[1px] bg-white/30 rounded-full" />
-              <div className="w-full justify-between p-5 flex">
-                <div className="flex flex-col items-start">
-                  <h1 className="text-[18px] text-[#DFF26A]">APY</h1>
-                  <h2 className="text-[22px] font-bold">{pool.apy}%</h2>
-                </div>
-                <div className="flex flex-col items-end ml-5">
-                  <h1 className="text-[18px] text-[#DFF26A]">TVL</h1>
-                  <h2 className="text-[22px] font-bold">${pool.tvl}</h2>
-                </div>
-              </div>
-            </div>
+            <PoolCard key={index} name={pool.name} limePrice={price} />
           ))}
         </div>
       </div>

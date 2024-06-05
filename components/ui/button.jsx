@@ -9,6 +9,7 @@ const Button = ({
   icon,
   loading,
   locked,
+
   ...rest
 }) => {
   // Base class for the button using Tailwind CSS
@@ -19,11 +20,12 @@ const Button = ({
   let variantClass = ""
   switch (variant) {
     case "primary":
-      variantClass = "bg-[#DFF26A] text-[#1C1C1C] font-bold text-[18px] "
+      variantClass =
+        "bg-[#DFF26A] border-transparent border text-[#1C1C1C] font-bold text-[18px] "
       break
     case "outline":
       variantClass =
-        "border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-indigo-500"
+        "border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 text-[18px] focus:ring-indigo-500"
       break
     case "black":
       variantClass =
@@ -36,7 +38,8 @@ const Button = ({
   }
 
   // Combine classes
-  const classes = `${baseClass} relative  ${variantClass} ${className}`.trim()
+  const classes =
+    `${baseClass} relative disabled:opacity-80  ${variantClass} ${className}`.trim()
 
   return (
     <button className={classes} {...rest} disabled={rest.disabled || loading}>

@@ -6,7 +6,7 @@ import { ArrowRight, ChevronLeft, Key, Link, Loader2, Mail } from "lucide-react"
 import {
   browserPopupRedirectResolver,
   createUserWithEmailAndPassword,
-  signInWithPopup,
+  signInWithPopup
 } from "firebase/auth"
 import { auth, provider } from "../firebaseConfig"
 import toast from "react-hot-toast"
@@ -34,7 +34,7 @@ export default function Register() {
       await signIn("credentials", {
         redirect: false,
         email,
-        password,
+        password
       })
       router.push("/dashboard")
     } catch (error) {
@@ -66,11 +66,12 @@ export default function Register() {
         {},
         {
           headers: {
-            Authorization: `Bearer ${res.user.accessToken}`,
-          },
+            Authorization: `Bearer ${res.user.accessToken}`
+          }
         }
       )
       const data = resUser.data.user_info
+      console.log(data)
       await signIn("credentials", {
         accessToken: res.user.accessToken,
         user_uid: data.user_uid,
@@ -78,7 +79,7 @@ export default function Register() {
         code: data.code,
         status: data.status,
         refreshToken: res.user.stsTokenManager.refreshToken,
-        redirect: false,
+        redirect: false
       })
       router.push("/dashboard")
     } catch (error) {
@@ -87,11 +88,11 @@ export default function Register() {
   }
 
   return (
-    <div className="bg-primary  w-full fixed min-h-[100vh] h-[100dvh] top-0  flex flex-col justify-end md:justify-center ">
-      <div className="w-full max-w-7xl gap-5 flex md:flex-row items-center flex-col pb-14 md:pb-0 px-5 mx-auto">
+    <div className="bg-primary   w-full fixed min-h-[100vh] h-[100dvh] top-0  flex flex-col justify-end md:justify-center ">
+      <div className="w-full relative h-full justify-between max-w-7xl gap-5 flex md:flex-row items-start flex-col pb-14 md:pb-0 px-5 mx-auto">
         <Button
           variant="black"
-          className="w-max px-5 absolute top-5 left-5"
+          className="w-max px-5 absolute top-5 left-0"
           onClick={() => router.push("/")}
           icon={<ChevronLeft />}
         ></Button>
@@ -238,21 +239,6 @@ export default function Register() {
                       placeholder="Confirm Password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="w-full bg-white flex rounded-xl items-center pl-5 ">
-                  <Link size={24} className="text-black" />
-                  <div>
-                    <input
-                      id="referralCode"
-                      name="referralCode"
-                      type="text"
-                      focus="true"
-                      className="appearance-none rounded-xl py-5 px-5 outline-none w-full text-lg font-light text-gray-800  "
-                      placeholder="Referral code (optional)"
-                      value={referralCode}
-                      onChange={(e) => setReferralCode(e.target.value)}
                     />
                   </div>
                 </div>

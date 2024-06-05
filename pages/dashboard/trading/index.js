@@ -1,39 +1,40 @@
 import BalanceCard from "components/balance-card"
 import Button from "components/ui/button"
 import UniversalCard from "components/universal-card"
+import useAxiosAuth from "lib/hooks/useAxiosAuth"
 import { ArrowRight } from "lucide-react"
+import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import Navigation from "pages/layout/Navigation"
-import React from "react"
+import React, { useEffect } from "react"
 
 const index = () => {
   const router = useRouter()
+  const { data: session } = useSession()
+  const [price, setPrice] = React.useState(0)
+  const axiosAuth = useAxiosAuth()
   const pools = [
     {
-      name: "long",
-      daily: 1.97,
-      apy: 54180,
-      tvl: 5456234,
-      lock: 20,
-      commission: 7,
+      name: "long"
     },
     {
-      name: "mid",
-      daily: 1.97,
-      apy: 54180,
-      tvl: 5456234,
-      lock: 30,
-      commission: 5,
+      name: "mid"
     },
     {
-      name: "short",
-      daily: 1.97,
-      apy: 54180,
-      tvl: 5456234,
-      lock: 40,
-      commission: 3,
-    },
+      name: "short"
+    }
   ]
+
+  const getPrice = async (pool) => {
+    const res = await axiosAuth.get(`/api/token/lime/price`)
+    setPrice(res.data.price)
+  }
+
+  useEffect(() => {
+    if (!session) return
+    getPrice()
+  }, [session])
+
   return (
     <Navigation>
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center   md:pb-0">
@@ -44,15 +45,7 @@ const index = () => {
         <div className="grid w-full gap-6 md:grid-cols-2 grid-cols-1">
           {pools.map((pool, index) => (
             <div className="w-full shadow-lg bg-white rounded-3xl p-4">
-              <UniversalCard
-                key={index}
-                name={pool.name}
-                daily={pool.daily}
-                apy={pool.apy}
-                tvl={pool.tvl}
-                lock={pool.lock}
-                commission={pool.commission}
-              />
+              <UniversalCard key={index} name={pool.name} limePrice={price} />
               <Button
                 onClick={() => router.push("/dashboard/trading/" + pool.name)}
                 variant="primary"

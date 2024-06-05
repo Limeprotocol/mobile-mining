@@ -6,7 +6,7 @@ import { auth, db } from "../../../firebaseConfig"
 import {
   signInWithEmailAndPassword,
   setPersistence,
-  localStoragePersistence,
+  localStoragePersistence
 } from "firebase/auth"
 import axios from "lib/axios"
 
@@ -15,7 +15,7 @@ import axios from "lib/axios"
 export default NextAuth({
   session: {
     strategy: "jwt",
-    maxAge: 7 * 24 * 60 * 60, // 4 hours
+    maxAge: 7 * 24 * 60 * 60 // 4 hours
   },
   providers: [
     GoogleProvider({
@@ -26,9 +26,9 @@ export default NextAuth({
         params: {
           prompt: "consent",
           access_type: "offline",
-          response_type: "token id_token",
-        },
-      },
+          response_type: "token id_token"
+        }
+      }
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -45,19 +45,21 @@ export default NextAuth({
             !credentials.code ||
             !credentials.status
           ) {
-            //   const userCredential = await signInWithEmailAndPassword(
-            auth, credentials.email, credentials.password
-            //  )
-
-            //   const res = await axios.post(
-            "api/user/create",
+            const userCredential = await signInWithEmailAndPassword(
+              auth,
+              credentials.email,
+              credentials.password
+            )
+            console.log("userCredential", userCredential)
+            const res = await axios.post(
+              "api/user/create",
               {},
               {
                 headers: {
-                  Authorization: `Bearer ${userCredential.user.stsTokenManager.accessToken}`,
-                },
+                  Authorization: `Bearer ${userCredential.user.stsTokenManager.accessToken}`
+                }
               }
-            //   )
+            )
             const data = res.data.user_info
             const user = userCredential.user
 
@@ -68,7 +70,7 @@ export default NextAuth({
                 code: data.code,
                 status: data.status,
                 accessToken: user.stsTokenManager.accessToken,
-                refreshToken: user.stsTokenManager.refreshToken,
+                refreshToken: user.stsTokenManager.refreshToken
               }
             }
           }
@@ -78,14 +80,14 @@ export default NextAuth({
             code: credentials.code,
             status: credentials.status,
             accessToken: credentials.accessToken,
-            refreshToken: credentials.refreshToken,
+            refreshToken: credentials.refreshToken
           }
         } catch (error) {
           console.log("error", error)
           throw new Error(error.message)
         }
-      },
-    }),
+      }
+    })
   ],
   callbacks: {
     async jwt({ token, user, trigger, session }) {
@@ -111,9 +113,9 @@ export default NextAuth({
       session.user.refreshToken = token.refreshToken
       console.log("session", session)
       return session
-    },
+    }
   },
   pages: {
-    signIn: "/login",
-  },
+    signIn: "/login"
+  }
 })

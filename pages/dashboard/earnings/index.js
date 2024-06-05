@@ -1,32 +1,59 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Navigation from "pages/layout/Navigation"
 import UniversalEarnings from "components/universal-earnings"
 import BalanceCard from "components/balance-card"
-import { Info } from "lucide-react"
+import useAxiosAuth from "lib/hooks/useAxiosAuth"
+import { useSession } from "next-auth/react"
 
 const index = () => {
   const [activeTab, setActiveTab] = useState("MINING")
+  const { data: session } = useSession()
+  const axiosAuth = useAxiosAuth()
+  const [limePrice, setLimePrice] = useState(0)
+  const [totalEarnings, setTotalEarnings] = useState(0)
 
-  const pools = [
-    {
-      name: "LONG TERM",
-      tokenAmount: "0.00",
-      timeLeft: "0 Days",
-      locked: false,
-    },
-    {
-      name: "MID TERM",
-      tokenAmount: "0.00",
-      timeLeft: "0 Days",
-      locked: true,
-    },
-    {
-      name: "SHORT TERM",
-      tokenAmount: "0.00",
-      timeLeft: "0 Days",
-      locked: false,
-    },
-  ]
+  const getPriceAndRewards = async (pool) => {
+    const res = await axiosAuth.get(`/api/token/lime/price`)
+    const res2 = await axiosAuth.get(`/api/pools/all/rewards`)
+
+    setTotalEarnings(res2.data.totalEarnings)
+    setLimePrice(res.data.price)
+  }
+
+  useEffect(() => {
+    if (session) getPriceAndRewards()
+  }, [session])
+
+  const pools =
+    activeTab === "TRADING"
+      ? [
+          {
+            name: "long",
+            tokenAmount: "0.00",
+            timeLeft: "0 Days",
+            locked: false
+          },
+          {
+            name: "mid",
+            tokenAmount: "0.00",
+            timeLeft: "0 Days",
+            locked: true
+          },
+          {
+            name: "short",
+            tokenAmount: "0.00",
+            timeLeft: "0 Days",
+            locked: false
+          }
+        ]
+      : [
+          {
+            name: "USDT / $LIME",
+            tokenAmount: "0.00",
+            timeLeft: "0 Days",
+            locked: false
+          }
+        ]
 
   return (
     <Navigation>
@@ -62,19 +89,26 @@ const index = () => {
               </span>
             </h1>
             <h1 className="text-[28px] flex items-end gap-2 font-bold">
-              <span className="h-max leading-none">0.00</span>
+              <span className="h-max leading-none">
+                {Math.ceil(totalEarnings).toLocaleString()}
+              </span>
               <span className="text-[18px] leading-none text-primary font-normal">
                 $LIME
               </span>
             </h1>
-            <p className="text-[12px] text-gray-300">$151.00</p>
+            <p className="text-[12px] text-gray-300">
+              ${Math.ceil(totalEarnings / limePrice).toLocaleString()}
+            </p>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {pools.map((pool, index) => (
-            <div className="w-full shadow-lg bg-white rounded-3xl p-4">
-              <UniversalEarnings key={index} {...pool} />
-            </div>
+            <UniversalEarnings
+              key={pool.name}
+              {...pool}
+              type={activeTab}
+              limePrice={limePrice}
+            />
           ))}
         </div>
       </div>
